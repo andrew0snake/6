@@ -177,7 +177,7 @@ void ungetch ( int c ) {
 
 int is_need ( char c ) {
 
-    if ( c == '/' || c == '#' || c == '_' || c == '"' ) {
+    if ( c == '/' || c == '#' || c == '_' || c == '"' || c == '\'' ) {
         return 1;
     }
     else {
@@ -223,7 +223,7 @@ int getword ( char * word, int lim ) {
 
     int c, d ;
     char * w = word; 
-    char quit = 1, end;   
+    char quit = 1, end, prev;   
     short int step = 0;
 
     while (isspace (c = getch ()));
@@ -278,21 +278,27 @@ int getword ( char * word, int lim ) {
                 }
                 break;              
               case '"':
-                printf ("\n---skipped in double quotes sybmols:---\n");
-                end = 1;
-                while (end) {
-                  d = getch ();
-                  printf ("%c", d);  
-                  if (d == EOF) {
-                    quit = 0;
-                    end = 1;
-                    return EOF;
-                  }    
-                  if (d == '"' || d == '\n') {
-                    end = 0;
-                  }
+                if (prev == '\'' && (d = getch ()) == '\'') {
+                  printf ( "double quoted symbol is in single quotes, not skipping.\n" );
                 }
-                printf ("\n---end of skipped in double quotes sybmols:---\n\n");
+                else {
+                  ungetch (d);
+                  printf ("\n---skipped in double quotes sybmols:---\n");
+                  end = 1;
+                  while (end) {
+                    d = getch ();
+                    printf ("%c", d);  
+                    if (d == EOF) {
+                      quit = 0;
+                      end = 1;
+                      return EOF;
+                    }    
+                    if (d == '"' || d == '\n') {
+                      end = 0;
+                    }
+                  }
+                  printf ("\n---end of skipped in double quotes sybmols:---\n\n");
+                }
                 break;  
               case '\n':
                 return 10;
@@ -312,6 +318,7 @@ int getword ( char * word, int lim ) {
         else {
             *(w+step) = c;
         }
+        prev = c;
         c = getch ();
     }
     step ++;    
