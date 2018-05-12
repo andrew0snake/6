@@ -1,0 +1,44 @@
+    if ( c != EOF ) {
+//        * w ++ = c;
+    }
+
+    if ( ! isalnum ( c ) && ! is_need ( c ) ) {
+        * w = '\0';
+        return c;
+    }
+/*
+    for ( ; -- lim > 0; w ++ ) {
+        if ( ! isalnum ( * w = getch () ) && ! is_need ( * w ) ) {
+            ungetch ( * w );
+            break;
+        }
+    }
+*/
+//    if ( isalpha ( c ) || c == '_' ) {
+    if ( isalnum ( c ) || c == '_' ) {
+        exit = 0;
+        for ( ; -- lim > 0 && exit == 0; w ++ ) {
+//            printf ( "previous symbol = %c;\n", * ( w - 1 ) );
+            if ( ! isalnum ( * w = getch () ) && * w != '_' ) {
+                ungetch ( * w );    
+                printf ( "ungetched symbol = '%c' and %d;\n", * w, * w );
+                exit = 1;
+                break;
+            }        
+/*  123
+  */
+
+
+// if ( isalpha ( c ) || c == '_' ) {
+ if ( isalnum ( c ) || c == '_' ) {
+
+//  qwe     asd     //zxc
+/*  asd */  123    //asd
+
+
+//123
+qwe
+
+// qwe asd
+456 rty fgh
+
