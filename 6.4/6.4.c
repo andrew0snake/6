@@ -288,7 +288,7 @@ int getword ( char * word, int lim ) {
                     end = 1;
                     return EOF;
                   }    
-                  if (d == '"') {
+                  if (d == '"' || d == '\n') {
                     end = 0;
                   }
                 }
